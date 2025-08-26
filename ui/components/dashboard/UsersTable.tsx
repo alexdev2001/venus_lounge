@@ -162,7 +162,7 @@ export default function UsersTable() {
                             <tr key={user.id} className="hover:bg-gray-50">
                                 <td className="p-3 border-b">{user.username}</td>
                                 <td className="p-3 border-b">{user.email}</td>
-                                <td className="p-3 border-b text-right space-x-2">
+                                <td className="p-3 border-b text-right flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
                                     <button
                                         onClick={() => openEditDialog(user)}
                                         className="px-3 py-1 bg-blue-500 text-black rounded hover:bg-blue-600 transition"
