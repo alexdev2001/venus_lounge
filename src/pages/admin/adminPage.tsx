@@ -194,7 +194,7 @@ export default function AdminPage() {
                                     const response = await fetch("https://venus-lounge-backend.onrender.com/bookings/verify", {
                                         method: "POST",
                                         headers: {
-                                            "Authorization": `Bearer ${token}`, // attach token to header
+                                            "Authorization": `Bearer ${token}`,
                                         },
                                         body: formData,
                                     });

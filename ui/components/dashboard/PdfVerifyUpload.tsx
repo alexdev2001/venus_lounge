@@ -5,7 +5,7 @@ interface PdfVerifyUploadProps {
     loading?: boolean;
 }
 
-export const PdfVerifyUpload: React.FC<PdfVerifyUploadProps> = ({ onVerify }) => {
+export const PdfVerifyUpload: React.FC<PdfVerifyUploadProps> = ({ onVerify, loading }) => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -55,7 +55,7 @@ export const PdfVerifyUpload: React.FC<PdfVerifyUploadProps> = ({ onVerify }) =>
                 />
                 <div className="flex flex-col items-center justify-center text-gray-500">
                     <span className="text-4xl mb-2">+</span>
-                    <span>Click or drag PDFs here for verification <div className="w-6"/></span>
+                    <span>Click or drag PDFs here for verification</span>
                 </div>
             </div>
 
@@ -73,11 +73,34 @@ export const PdfVerifyUpload: React.FC<PdfVerifyUploadProps> = ({ onVerify }) =>
 
             {/* Verify Button */}
             <button
-                className="px-6 py-2 bg-orange-500 text-black rounded hover:bg-orange-600 transition"
+                className={`px-6 py-2 bg-orange-500 text-black rounded hover:bg-orange-600 transition flex items-center justify-center`}
                 onClick={handleVerify}
-                disabled={selectedFiles.length === 0}
+                disabled={selectedFiles.length === 0 || loading}
             >
-                Verify
+                {loading ? (
+                    <svg
+                        className="animate-spin h-5 w-5 text-black"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                    >
+                        <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                        ></circle>
+                        <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v8H4z"
+                        ></path>
+                    </svg>
+                ) : (
+                    "Verify"
+                )}
             </button>
         </div>
     );
