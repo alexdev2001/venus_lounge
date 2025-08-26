@@ -1,4 +1,4 @@
-import { FaTwitter, FaWhatsapp, FaInstagram } from "react-icons/fa";
+import {FaTwitter, FaWhatsapp, FaInstagram, FaFacebook, FaTiktok} from "react-icons/fa";
 import logo from "../../src/assets/logo-3.png"
 import {useNavigate} from "react-router-dom";
 
@@ -87,14 +87,14 @@ export default function Footer() {
                     {/* Socials */}
                     <div>
                         <div className="flex space-x-4 text-2xl">
-                            <a href="#" className="hover:text-orange-500 transition">
-                                <FaTwitter />
+                            <a href="https://www.facebook.com/venusloungemw/" className="hover:text-orange-500 transition">
+                                <FaFacebook />
                             </a>
-                            <a href="#" className="hover:text-orange-500 transition">
-                                <FaWhatsapp />
-                            </a>
-                            <a href="#" className="hover:text-orange-500 transition">
+                            <a href="https://www.instagram.com/venusloungemw" className="hover:text-orange-500 transition">
                                 <FaInstagram />
+                            </a>
+                            <a href="https://www.tiktok.com/@venusloungemw?_t=ZM-8zC0cP5era9&_r=1" className="hover:text-orange-500 transition">
+                                <FaTiktok />
                             </a>
                         </div>
                     </div>
