@@ -10,25 +10,25 @@ function CompanyCards() {
             img: mission,
             icon: FeatherTarget,
             title: "Mission",
-            text: "Creating a warm and elegant escape in New Kanjedza, Blantyre — where every visit feels like coming home, only more luxurious."
+            text: "A warm, elegant escape in New Kanjedza — every visit feels luxurious."
         },
         {
             img: vision,
             icon: FeatherEye,
             title: "Vision",
-            text: "To be Blantyre’s most cherished destination for luxury, connection, and unforgettable moments — setting the standard for elegance in every experience."
+            text: "To be Blantyre’s top destination for luxury, connection, and memorable moments."
         },
         {
             img: values,
             icon: FeatherHeart,
             title: "Values",
-            text: "We are guided by elegance, warmth, and integrity — creating a space where every guest feels valued, every moment is memorable, and every interaction reflects our commitment to excellence."
+            text: "Guided by elegance, warmth, and integrity — making every moment memorable."
         },
         {
             img: purpose,
             icon: FeatherCompass,
             title: "Purpose",
-            text: "To create a luxurious, welcoming space in New Kanjedza, Blantyre, where every guest can relax, connect, and enjoy unforgettable moments in style."
+            text: "Create a luxurious, welcoming space for guests to relax and enjoy in style."
         }
     ];
 
