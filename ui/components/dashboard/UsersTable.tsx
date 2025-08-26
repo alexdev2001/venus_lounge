@@ -152,42 +152,42 @@ export default function UsersTable() {
                 <thead className="bg-gray-100">
                 <tr>
                     <th className="p-3 border-b text-gray-700 font-semibold">Username</th>
-                    <th className="p-3 border-b text-gray-700 font-semibold">Email</th>
-                <th className="p-3 border-b text-gray-700 font-semibold text-right">Actions</th>
+                    <th className="p-3 border-b text-gray-700 font-semibold hidden sm:table-cell">Email</th>
+                    <th className="p-3 border-b text-gray-700 font-semibold text-right">Actions</th>
                 </tr>
                 </thead>
-                    <tbody>
-                    {users.length > 0 ? (
-                        users.map((user) => (
-                            <tr key={user.id} className="hover:bg-gray-50">
-                                <td className="p-3 border-b">{user.username}</td>
-                                <td className="p-3 border-b">{user.email}</td>
-                                <td className="p-3 border-b text-right flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
-                                    <button
-                                        onClick={() => openEditDialog(user)}
-                                        className="px-3 py-1 bg-blue-500 text-black rounded hover:bg-blue-600 transition"
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        onClick={() => openDeleteDialog(user)}
-                                        className="px-3 py-1 bg-red-500 text-black rounded hover:bg-red-600 transition"
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td
-                                colSpan={3}
-                                className="p-6 text-center text-gray-500 italic"
-                            >
-                                No users found
+                <tbody>
+                {users.length > 0 ? (
+                    users.map((user) => (
+                        <tr key={user.id} className="hover:bg-gray-50">
+                            <td className="p-3 border-b">{user.username}</td>
+                            <td className="p-3 border-b hidden sm:table-cell">{user.email}</td>
+                            <td className="p-3 border-b text-right flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
+                                <button
+                                    onClick={() => openEditDialog(user)}
+                                    className="px-3 py-1 bg-blue-500 text-black rounded hover:bg-blue-600 transition"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => openDeleteDialog(user)}
+                                    className="px-3 py-1 bg-red-500 text-black rounded hover:bg-red-600 transition"
+                                >
+                                    Delete
+                                </button>
                             </td>
                         </tr>
-                    )}
+                    ))
+                ) : (
+                    <tr>
+                        <td
+                            colSpan={3}
+                            className="p-6 text-center text-gray-500 italic"
+                        >
+                            No users found
+                        </td>
+                    </tr>
+                )}
                 </tbody>
             </table>
 
