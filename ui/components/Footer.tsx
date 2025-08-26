@@ -1,4 +1,4 @@
-import {FaTwitter, FaWhatsapp, FaInstagram, FaFacebook, FaTiktok} from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaTiktok} from "react-icons/fa";
 import logo from "../../src/assets/logo-3.png"
 import {useNavigate} from "react-router-dom";
 
