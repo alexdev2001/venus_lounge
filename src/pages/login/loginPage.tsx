@@ -1,6 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import background from "../../assets/pattern.svg";
+import background from "../../assets/Pattern.svg";
 import { useState } from "react";
 import {Link} from "react-router-dom";
 
