@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
 import logo from "./../../src/assets/logo1-nbg.png";
 import { FaBars, FaTimes } from "react-icons/fa";

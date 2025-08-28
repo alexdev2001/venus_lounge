@@ -43,7 +43,7 @@ export default function BookPage() {
         setIsError(false);
 
         try {
-            const submissionResponse = await fetch('http://localhost:3003/bookings', {
+            const submissionResponse = await fetch('https://venus-lounge-backend.onrender.com/bookings', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

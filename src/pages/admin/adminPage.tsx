@@ -92,7 +92,7 @@ export default function AdminPage() {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await fetch("http://localhost:3003/bookings");
+                const response = await fetch("https://venus-lounge-backend.onrender.com/bookings");
                 if (response.ok) {
                     const data = await response.json();
                     setBookings([...data.allBookings].sort((a, b) => b.id - a.id));
@@ -114,7 +114,7 @@ export default function AdminPage() {
         if (deleteId === null) return;
 
         try {
-            const response = await fetch(`http://localhost:3003/bookings/${deleteId}`, {
+            const response = await fetch(`https://venus-lounge-backend.onrender.com/bookings/${deleteId}`, {
                 method: "DELETE",
             });
             if (response.ok) {
@@ -135,7 +135,7 @@ export default function AdminPage() {
 
     const handleAddUser = async () => {
         try {
-            const response = await fetch("http://localhost:3003/users", {
+            const response = await fetch("https://venus-lounge-backend.onrender.com/users", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" }, // ✅ important
                 body: JSON.stringify({
@@ -191,7 +191,7 @@ export default function AdminPage() {
                                 try {
                                     const token = localStorage.getItem("token");
 
-                                    const response = await fetch("http://localhost:3003/bookings/verify", {
+                                    const response = await fetch("https://venus-lounge-backend.onrender.com/bookings/verify", {
                                         method: "POST",
                                         headers: {
                                             "Authorization": `Bearer ${token}`,
@@ -207,7 +207,7 @@ export default function AdminPage() {
                                         }
 
                                         const allBookings = await (
-                                            await fetch("http://localhost:3003/bookings/")
+                                            await fetch("https://venus-lounge-backend.onrender.com/bookings/")
                                         ).json();
                                         setBookings(allBookings.allBookings);
                                     } else {

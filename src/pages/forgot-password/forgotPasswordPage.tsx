@@ -17,7 +17,7 @@ export default function ForgotPasswordPage() {
         setIsError(false);
 
         try {
-            const response = await fetch("http://localhost:3003/request-reset", {
+            const response = await fetch("https://venus-lounge-backend.onrender.com/request-reset", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

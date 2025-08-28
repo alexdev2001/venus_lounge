@@ -50,7 +50,7 @@ export default function UsersTable() {
         try {
             const token = localStorage.getItem("token"); // Retrieve token from localStorage
 
-            const response = await fetch("http://localhost:3003/users", {
+            const response = await fetch("https://venus-lounge-backend.onrender.com/users", {
                 headers: {
                     "Authorization": `Bearer ${token}`, // Attach token to header
                     "Content-Type": "application/json"
@@ -88,7 +88,7 @@ export default function UsersTable() {
 
     const handleDelete = async (id: number) => {
         try {
-            const response = await fetch(`http://localhost:3003/users/${id}`, {
+            const response = await fetch(`https://venus-lounge-backend.onrender.com/users/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -121,7 +121,7 @@ export default function UsersTable() {
         };
 
         try {
-            const res = await fetch(`http://localhost:3003/users/${selectedUser.id}`, {
+            const res = await fetch(`https://venus-lounge-backend.onrender.com/users/${selectedUser.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
