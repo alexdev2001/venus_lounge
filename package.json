@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "prebuild": "rimraf **/*.d.ts build/ dist/ || true",
     "lint": "eslint .",
     "preview": "vite preview"
   },
