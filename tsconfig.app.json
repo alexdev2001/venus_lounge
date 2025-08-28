@@ -29,11 +29,4 @@
     }
   },
   "include": ["src"],
-  "exclude": [
-    "**/*.d.ts",   
-    "node_modules",
-    "build",
-    "dist",
-    "**/__tests__/**"
-  ]
 }
