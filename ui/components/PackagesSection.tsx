@@ -1,6 +1,16 @@
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 
-export default function PackagesSection({ packages }) {
+type Package = {
+    title: string;
+    description: string;
+    icon: string;
+};
+
+interface PackagesSectionProps {
+    packages: Package[];
+}
+
+export default function PackagesSection({ packages }: PackagesSectionProps)  {
     return (
         <section className="max-w-6xl mx-auto mb-16 my-text">
             <div className="text-center mb-12">
