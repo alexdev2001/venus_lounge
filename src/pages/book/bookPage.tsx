@@ -16,6 +16,24 @@ export default function BookPage() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<string | null>(null);
     const [isError, setIsError] = useState(false);
+    const [packageType, setPackageType] = useState<"silver" | "gold" | "platinum">("silver");
+    const [numPeople, setNumPeople] = useState(1);
+
+    const packageLimits = {
+        silver: { maxPeople: 3, maxHours: 2, extras: "2 hours max, 1-3 people" },
+        gold: { maxPeople: 9, maxHours: 4, extras: "4 hours max, 1-9 people" },
+        platinum: { maxPeople: 100, maxHours: 8, extras: "8 hours max, 10+ people, includes free bottle" },
+    };
+
+    const handlePeopleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseInt(e.target.value, 10);
+        const max = packageLimits[packageType].maxPeople;
+        if (value > max) {
+            setNumPeople(max);
+        } else {
+            setNumPeople(value);
+        }
+    };
 
     const handleSubmitBooking = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -25,7 +43,7 @@ export default function BookPage() {
         setIsError(false);
 
         try {
-            const submissionResponse = await fetch('https://venus-lounge-backend.onrender.com/bookings', {
+            const submissionResponse = await fetch('http://localhost:3003/bookings', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,6 +52,8 @@ export default function BookPage() {
                 body: JSON.stringify({
                     fullName: fullname,
                     email: email,
+                    packageType,
+                    numPeople,
                     start_time: startTime,
                     end_time: endTime,
                 }),
@@ -63,6 +83,17 @@ export default function BookPage() {
             setLoading(false);
         }
     }
+
+    const handleEndTimeChange = (date: Date | null) => {
+        if (!date || !startTime) return;
+        const maxHours = packageLimits[packageType].maxHours;
+        const hours = (date.getTime() - startTime.getTime()) / (1000 * 60 * 60);
+        if (hours > maxHours) {
+            setEndTime(new Date(startTime.getTime() + maxHours * 60 * 60 * 1000));
+        } else {
+            setEndTime(date);
+        }
+    };
 
     return (
         <div className="relative h-screen w-full">
@@ -116,6 +147,33 @@ export default function BookPage() {
                                 />
                             </div>
 
+                            <div>
+                                <label className="block text-gray-700 text-left font-medium mb-1">Package Type</label>
+                                <select
+                                    value={packageType}
+                                    onChange={(e) => setPackageType(e.target.value as "silver" | "gold" | "platinum")}
+                                    className="w-full px-4 py-2 border rounded-lg"
+                                >
+                                    <option value="silver">Silver</option>
+                                    <option value="gold">Gold</option>
+                                    <option value="platinum">Platinum</option>
+                                </select>
+                                <p className="text-sm text-gray-500 mt-1">{packageLimits[packageType].extras}</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-gray-700 font-medium mb-1 text-left">Number of People</label>
+                                <input
+                                    type="number"
+                                    value={numPeople}
+                                    onChange={handlePeopleChange}
+                                    min={1}
+                                    max={packageLimits[packageType].maxPeople}
+                                    className="w-full px-4 py-2 border rounded-lg"
+                                    required
+                                />
+                            </div>
+
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-gray-700 font-medium mb-1 text-left">Start Time</label>
@@ -132,7 +190,7 @@ export default function BookPage() {
                                     <label className="block text-gray-700 font-medium mb-1 text-left">End Time</label>
                                     <DateTimePicker
                                         value={endTime}
-                                        onChange={(date) => setEndTime(date)}
+                                        onChange={handleEndTimeChange}
                                         className="w-full"
                                         required
                                         disableClock={false}

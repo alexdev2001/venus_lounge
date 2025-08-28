@@ -14,10 +14,20 @@ import CompanyCards from "../ui/components/CompanyCards.tsx";
 import BookHeroSection from "../ui/components/BookHeroSection.tsx";
 import {ContactUs} from "../ui/components/ContactUs.tsx";
 import Footer from "../ui/components/Footer.tsx";
+import PackagesSection from "../ui/components/PackagesSection.tsx";
+import silverIcon from '../src/assets/icons/silver.png';
+import goldIcon from '../src/assets/icons/gold.png';
+import platinumIcon from '../src/assets/icons/platinum.png';
 
 function App() {
     const words = ["Relax", "Enjoy", "Unwind", "Connect"];
     const images = [img3, img2, img1, img6];
+
+    const packages = [
+        { title: "Silver", description: "Great for individuals starting out. Allows 1-3 people, with a maximum 2 hours of usage", icon: silverIcon },
+        { title: "Gold", description: "Perfect balance. Allows 1-8 people, with a maximum of 4 hours of usage", icon: goldIcon },
+        { title: "Platinum", description: "Best value with premium features. Allows 1-10+ people, with a maximum of 8 hours of usage.", icon: platinumIcon },
+    ]
 
     return (
         <div className="flex h-full w-full flex-col items-center bg-default-background overflow-x-hidden">
@@ -100,6 +110,10 @@ function App() {
             <Separator/>
             <section id="book" className="w-full">
                 <BookHeroSection/>
+            </section>
+            <Separator/>
+            <section id="packages" className="w-full">
+                <PackagesSection packages={packages} />
             </section>
             <Separator/>
             <section id="contact" className="w-full">
