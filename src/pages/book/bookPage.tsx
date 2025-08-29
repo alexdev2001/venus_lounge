@@ -4,7 +4,21 @@ import background from "../../assets/Pattern-green.svg";
 import DateTimePicker from "react-datetime-picker";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
-import { useState } from "react";
+import {useEffect, useState} from "react";
+import SlotVisualizer from "../../../ui/components/SlotVisualizer";
+import bookingGif from '../../assets/email.gif';
+
+interface Booking {
+    id?: number;
+    fullName?: string;
+    email: string;
+    packageType: "silver" | "gold" | "platinum";
+    numPeople: number;
+    start_time: Date;
+    end_time: Date;
+    qr_code?: string | null;
+    status?: "pending" | "verified" | "past due";
+}
 
 export default function BookPage() {
     const navigate = useNavigate();
@@ -18,6 +32,13 @@ export default function BookPage() {
     const [isError, setIsError] = useState(false);
     const [packageType, setPackageType] = useState<"silver" | "gold" | "platinum">("silver");
     const [numPeople, setNumPeople] = useState(1);
+    const [showSlots, setShowSlots] = useState(false);
+    const [bookings, setBookings] = useState<Booking[]>([]);
+    const [loadingSlots, setLoadingSlots] = useState(false)
+    const [selectedDate, setSelectedDate] = useState<string>(
+        new Date().toISOString().split("T")[0]
+    );
+    const [showInstructions, setShowInstructions] = useState(false);
 
     const packageLimits = {
         silver: { maxPeople: 3, maxHours: 2, extras: "2 hours max, 1-3 people" },
@@ -95,6 +116,31 @@ export default function BookPage() {
         }
     };
 
+    const fetchBookings = async () => {
+        setLoadingSlots(true);
+        try {
+            const res = await fetch("https://venus-lounge-backend.onrender.com/bookings");
+            if (!res.ok) {
+                throw new Error(`Server error: ${res.status}`);
+            }
+            const data = await res.json();
+            setBookings(data.allBookings);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoadingSlots(false);
+        }
+    };
+
+
+
+
+    useEffect(() => {
+        if (showSlots) {
+            fetchBookings();
+        }
+    }, [showSlots]);
+
     return (
         <div className="relative h-screen w-full">
             {/* Back Arrow */}
@@ -104,6 +150,24 @@ export default function BookPage() {
             >
                 <FaArrowLeft className="text-3xl text-orange-600" />
             </button>
+            <div className="absolute top-6 right-6 flex space-x-2 z-50">
+                <button
+                    type="button"
+                    onClick={() => setShowSlots(true)}
+                    className="py-2 px-4 bg-green-600 text-orange-600 rounded-lg shadow-lg hover:bg-green-700 transition"
+                >
+                    Preview Slots
+                </button>
+
+                <button
+                    type="button"
+                    onClick={() => setShowInstructions(true)}
+                    className="py-2 px-3 bg-gray-200 text-orange-600 rounded-lg shadow-lg hover:bg-gray-300 transition font-bold text-lg"
+                    title="Instructions"
+                >
+                    ?
+                </button>
+            </div>
 
             {/* Booking Section */}
             <section
@@ -226,6 +290,72 @@ export default function BookPage() {
                     </div>
                 </div>
             </section>
+
+            {showSlots && (
+                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+                    <div className="bg-white rounded-xl p-6 shadow-lg w-[90%] max-w-3xl relative">
+                        <button
+                            onClick={() => setShowSlots(false)}
+                            className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+                        >
+                            ✕
+                        </button>
+
+
+                        {/* Title + Date Selector */}
+                        <div className="flex flex-col items-center mb-6">
+                            <h3 className="text-xl font-bold mb-2">Available Slots</h3>
+                            <input
+                                type="date"
+                                value={selectedDate}
+                                onChange={(e) => setSelectedDate(e.target.value)}
+                                className="border border-gray-300 rounded-lg px-3 py-2 text-gray-700 focus:ring-2 focus:ring-orange-400"
+                            />
+                        </div>
+
+                        {/* Slot Graphic */}
+                        {loadingSlots ? (
+                            <p>Loading...</p>
+                        ) : (
+                            <div className="h-80 w-full">
+                                <SlotVisualizer bookings={bookings} selectedDate={selectedDate} />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {showInstructions && (
+                <div className="fixed inset-0 bg-black/40 my-text backdrop-blur-sm flex items-center justify-center z-50">
+                    <div className="bg-white rounded-xl p-6 shadow-lg w-[90%] max-w-md relative flex flex-col items-center">
+                        <button
+                            onClick={() => setShowInstructions(false)}
+                            className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+                        >
+                            ✕
+                        </button>
+
+                        <img
+                            src={bookingGif}
+                            alt="Instructions for booking"
+                            className="w-32 h-auto mb-4"
+                        />
+
+                        <h3 className="text-xl font-bold mb-4 text-center">Booking Instructions</h3>
+
+                        {/* The unordered list (<ul>) is replaced with an ordered list (<ol>) */}
+                        <ol className="list-decimal text-left pl-5 space-y-2 text-gray-700">
+                            <li>Enter your name</li>
+                            <li>Enter the destination email where booking document is received.</li>
+                            <li>Select your desired package type and the number of people within the package.</li>
+                            <li>Click "Preview Slots" to see available times before selecting start and end times.</li>
+                            <li>Pick a start and end time within the package limits.</li>
+                            <li>Ensure your email is correct to receive confirmation.</li>
+                            <li>Click "Confirm Booking" to finalize your reservation.</li>
+                        </ol>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
